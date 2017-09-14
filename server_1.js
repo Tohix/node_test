@@ -12,24 +12,23 @@ var url = require('url');
 // server.on('request', function(req, res) {
 //     res.end('Hello world! ' + ++counter);
 // })
-///-------------------
+//-------------------
 
 
-var server = new http.Server(function(req, res) {
+var server = new http.Server();
 
-    console.log(req.headers);
-
+server.on('request', function(req, res){
 
     var urlParsed = url.parse(req.url, true);
-    console.log(urlParsed);
+    debugger;
 
     if (urlParsed.pathname == '/echo' && urlParsed.query.message) {
-        res.setHeader('Cache-control', 'no-cache');
         res.end(urlParsed.query.message);
-    } else {
-        res.statusCode = 404;
-        res.end("Page not found");
+        return;
     }
+
+    res.statusCode = 404;
+    res.end("Page not found");
 });
 
 server.listen(1337, '127.0.0.1');
